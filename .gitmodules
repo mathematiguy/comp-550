@@ -1,0 +1,3 @@
+[submodule "assignment-1/submodules/llama"]
+	path = assignment-1/submodules/llama
+	url = git@github.com:facebookresearch/llama.git
