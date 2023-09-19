@@ -1,0 +1,9 @@
+params:
+  - model
+stages:
+  download_models:
+    foreach: ${model}
+    do:
+      cmd: bash src/download.sh models ${key}
+      outs:
+        - models/${key}

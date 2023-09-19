@@ -1,0 +1,17 @@
+accelerate==0.21.0
+bitsandbytes==0.41.0
+dvc
+einops==0.6.1
+fastparquet
+ipython
+jupyter
+jupyterlab
+langchain==0.0.240
+ninja
+pandas
+safetensors>=0.3.2
+scipy
+sentencepiece>=0.1.97
+torch>=2.0.1
+transformers==4.31.0
+xformers==0.0.20
