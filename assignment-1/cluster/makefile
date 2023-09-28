@@ -30,6 +30,15 @@ squeue:
 trigger:
 	bash src/trigger.sh
 
+# Use this command to send the singularity container to a running remote session on the cluster
+push: USER_NAME=caleb.moses
+push: SERVER=cn-f001
+push: OBJECT=$(IMAGE)
+push: REMOTE=$(USER_NAME)@$(SERVER).server.mila.quebec
+push: DEST=$(REPO_NAME)/
+push:
+	rsync -ahP $(OBJECT) $(REMOTE):$(DEST)
+
 dvc-setup: $(SCRATCH)/$(REPO_NAME)/logs \
 	$(SCRATCH)/$(REPO_NAME)/dvc \
 	$(ARCHIVE)/$(REPO_NAME)/dvc

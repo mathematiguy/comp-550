@@ -32,15 +32,6 @@ container: $(IMAGE)
 $(IMAGE): Singularity
 	sudo singularity build $(IMAGE) $(SINGULARITY_ARGS) Singularity
 
-# Use this command to send the singularity container to a running remote session on the cluster
-push: USER_NAME=caleb.moses
-push: SERVER=cn-f001
-push: OBJECT=$(IMAGE)
-push: REMOTE=$(USER_NAME)@$(SERVER).server.mila.quebec
-push: DEST=$(REPO_NAME)/
-push:
-	rsync -ahP $(OBJECT) $(REMOTE):$(DEST)
-
 # Starts a shell within the Singularity container, with the virtual environment activated.
 shell:
 	singularity shell $(FLAGS) $(IMAGE) $(SINGULARITY_ARGS) bash
