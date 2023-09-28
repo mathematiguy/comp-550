@@ -2,15 +2,15 @@
 # Reference of the kind of base you want to use (e.g., docker, debootstrap, shub).
 Bootstrap: docker
 # Select the docker image you want to use (Here we choose tensorflow)
-From: ubuntu:22.04
+From: texlive/texlive:latest-full-doc
 
 # Environment variables that should be sourced at runtime.
 %environment
     # use bash as default shell
     SHELL=/bin/bash
     PYTHON_VERSION=3.9
-    PATH="/pkg/code:${PATH}"
-    PYTHONPATH="/opt/llama:${PYTHONPATH}"
+    PATH="/opt/local/bin:${PATH}"
+    PYTHONPATH="/opt/llama:/opt/local/bin/:${PYTHONPATH}"
     export SHELL PYTHON_VERSION PATH PYTHONPATH
 %files
     requirements.txt requirements.txt
@@ -34,9 +34,14 @@ From: ubuntu:22.04
 
     # Install apt packages
     apt update
-    apt install -y curl software-properties-common build-essential libgl1-mesa-glx rsync
+    apt install -y curl software-properties-common build-essential rsync python3-launchpadlib
     add-apt-repository ppa:deadsnakes/ppa -y
     add-apt-repository ppa:rmescandon/yq -y
+
+    # Installing LaTeX packages...
+    tlmgr init-usertree && \
+    tlmgr update --all
+    tlmgr install koma-script
 
     # Install yq (yaml processing)
     apt install -y yq
@@ -47,13 +52,14 @@ From: ubuntu:22.04
 
     echo "Install python${PYTHON_VERSION}.."
     apt install -y python${PYTHON_VERSION}-dev python${PYTHON_VERSION}-distutils python${PYTHON_VERSION}-venv
-    update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_VERSION} 1
-    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python${PYTHON_VERSION} 1
+    python${PYTHON_VERSION} -m venv /opt/local
+    update-alternatives --install /usr/bin/python python /opt/local/bin/python${PYTHON_VERSION} 1
+    update-alternatives --install /usr/bin/python3 python3 /opt/local/bin/python${PYTHON_VERSION} 1
 
     echo "Installing pip.."
-    curl -sS https://bootstrap.pypa.io/get-pip.py | python3
-    update-alternatives --install /usr/local/bin/pip pip /usr/local/bin/pip${PYTHON_VERSION} 1
-    update-alternatives --install /usr/local/bin/pip3 pip3 /usr/local/bin/pip${PYTHON_VERSION} 1
+    curl -sS https://bootstrap.pypa.io/get-pip.py | /opt/local/bin/python3
+    update-alternatives --install /usr/local/bin/pip pip /opt/local/bin/pip${PYTHON_VERSION} 1
+    update-alternatives --install /usr/local/bin/pip3 pip3 /opt/local/bin/pip${PYTHON_VERSION} 1
 
     echo "Install basic requirements"
     pip3 install wheel
