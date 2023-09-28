@@ -3,7 +3,6 @@ REPO_NAME := $(shell basename `git rev-parse --show-toplevel` | tr '[:upper:]' '
 IMAGE := $(REPO_NAME).sif
 RUN ?= singularity exec $(FLAGS) -B submodules/llama:/opt/llama $(IMAGE)
 SINGULARITY_ARGS ?=
-DVC_CACHE_DIR ?= $(shell dvc cache dir)
 FLAGS ?=
 VENV_PATH ?= venv
 

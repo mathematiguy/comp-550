@@ -6,6 +6,8 @@ SINGULARITY_ARGS ?=
 DVC_CACHE_DIR ?= $(shell dvc cache dir)
 FLAGS ?=
 VENV_PATH ?= venv
+ARCHIVE ?= /archive
+SCRATCH ?= /scratch
 
 .PHONY: show_logs trigger scratch archive repro predict start jupyter container push shell
 
