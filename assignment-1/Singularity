@@ -72,4 +72,4 @@ From: texlive/texlive:latest-full-doc
     pip3 install -e /opt/llama
 
     echo "Install NLTK data"
-    python3 -m nltk.downloader -d /opt/local/share/nltk_data all
+    /opt/local/bin/python3.11 -m nltk.downloader -d /opt/local/share/nltk_data all
