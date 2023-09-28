@@ -8,7 +8,11 @@ VENV_PATH ?= venv
 
 include cluster/makefile
 
-.PHONY: show_logs trigger scratch archive repro predict start jupyter container push shell
+.PHONY: report show_logs trigger scratch archive repro predict start jupyter container push shell
+
+report: report/article.pdf
+report/article.pdf: report/article.tex
+	${RUN} bash -c "cd report && latexmk article.tex -pdf"
 
 test_llama:
 	$(RUN) torchrun --nproc_per_node 1 submodules/llama/example_chat_completion.py \
@@ -19,6 +23,9 @@ test_llama:
 convert_llama_weights:
 	$(RUN) python3 submodules/transformers/src/transformers/models/llama/convert_llama_weights_to_hf.py \
     --input_dir models/llama-2-7b --model_size 7B --output_dir hf_models/llama-2-7b
+
+clean:
+	rm -f report/*.blg report/*.fls report/*.out report/*.log report/*.fdb_latexmk report/*.aux report/*.pdf report/*.bbl report/*.toc
 
 jupyter:
 	$(RUN)  jupyter lab \
