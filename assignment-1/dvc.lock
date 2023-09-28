@@ -8,14 +8,6 @@ stages:
       md5: 72221113c631bfe8e939d3c88df16217.dir
       size: 511559
       nfiles: 4
-  download_models@llama-2-7b:
-    cmd: bash src/download.sh models llama-2-7b
-    outs:
-    - path: models/llama-2-7b
-      hash: md5
-      md5: 46e439784db0fe93c78fcfb75c037d1f.dir
-      size: 13476925365
-      nfiles: 3
   download_models@llama-2-7b-chat:
     cmd: bash src/download.sh models llama-2-7b-chat
     outs:
@@ -24,35 +16,3 @@ stages:
       md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
       size: 13476925365
       nfiles: 3
-  download_models@llama-2-13b:
-    cmd: bash src/download.sh models llama-2-13b
-    outs:
-    - path: models/llama-2-13b
-      hash: md5
-      md5: ec882923f1099f47508f0c13730eb729.dir
-      size: 26032659542
-      nfiles: 4
-  download_models@llama-2-13b-chat:
-    cmd: bash src/download.sh models llama-2-13b-chat
-    outs:
-    - path: models/llama-2-13b-chat
-      hash: md5
-      md5: fb60f01dd26e53b54f71b14081ecd29e.dir
-      size: 26032794810
-      nfiles: 4
-  download_models@llama-2-70b:
-    cmd: bash src/download.sh models llama-2-70b
-    outs:
-    - path: models/llama-2-70b
-      hash: md5
-      md5: 28c37074fbe1070e1df1649f4b56f8f7.dir
-      size: 137973650585
-      nfiles: 10
-  download_models@llama-2-70b-chat:
-    cmd: bash src/download.sh models llama-2-70b-chat
-    outs:
-    - path: models/llama-2-70b-chat
-      hash: md5
-      md5: 636e7b44a6524862698da91e638cada4.dir
-      size: 137973650585
-      nfiles: 10
