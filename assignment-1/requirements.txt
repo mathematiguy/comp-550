@@ -15,3 +15,6 @@ sentencepiece>=0.1.97
 torch>=2.0.1
 transformers==4.31.0
 xformers==0.0.20
+nltk
+numpy
+scikit-learn
