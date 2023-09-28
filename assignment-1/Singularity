@@ -70,3 +70,6 @@ From: texlive/texlive:latest-full-doc
 
     echo "Install llama submodule"
     pip3 install -e /opt/llama
+
+    echo "Install NLTK data"
+    python3 -m nltk.downloader -d /opt/local/share/nltk_data all
