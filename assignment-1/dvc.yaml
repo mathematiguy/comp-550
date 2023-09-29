@@ -7,3 +7,8 @@ stages:
       cmd: bash src/download.sh models ${key}
       outs:
         - models/${key}
+  report:
+    cmd: bash -c "cd report && latexmk article.tex -pdf"
+    outs:
+      - report/article.pdf
+
