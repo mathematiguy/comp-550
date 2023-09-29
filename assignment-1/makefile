@@ -10,10 +10,6 @@ include cluster/makefile
 
 .PHONY: report show_logs trigger scratch archive repro predict start jupyter container push shell
 
-report: report/article.pdf
-report/article.pdf: report/article.tex
-	${RUN} bash -c "cd report && latexmk article.tex -pdf"
-
 test_llama:
 	$(RUN) torchrun --nproc_per_node 1 submodules/llama/example_chat_completion.py \
 		--ckpt_dir models/llama-2-7b-chat/ \
