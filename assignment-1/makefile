@@ -8,7 +8,7 @@ VENV_PATH ?= venv
 
 include cluster/makefile
 
-.PHONY: report show_logs trigger scratch archive repro predict start jupyter container push shell
+.PHONY: test_llama convert_llama_weights clean jupyter container shell
 
 test_llama:
 	$(RUN) torchrun --nproc_per_node 1 submodules/llama/example_chat_completion.py \

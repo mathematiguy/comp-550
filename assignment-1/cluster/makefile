@@ -9,7 +9,7 @@ VENV_PATH ?= venv
 ARCHIVE ?= /archive
 SCRATCH ?= /scratch
 
-.PHONY: show_logs trigger scratch archive repro predict start jupyter container push shell
+.PHONY: gpu_alloc show_logs set_secrets encrypt squeue trigger push dvc-setup
 
 gpu_alloc:
 	salloc --gres=gpu:1 -c 4 --mem=10G -t 1:00:00
