@@ -32,8 +32,11 @@ jupyter:
 # Builds a Singularity container from the Singularity definition file.
 # Note: This command requires sudo privileges.
 container: $(IMAGE)
-$(IMAGE): Singularity
+$(IMAGE): Singularity submodules/llama/README.md
 	sudo singularity build $(IMAGE) $(SINGULARITY_ARGS) Singularity
+
+submodules/llama/README.md:
+	git submodule init && git submodule update
 
 # Starts a shell within the Singularity container, with the virtual environment activated.
 shell:
