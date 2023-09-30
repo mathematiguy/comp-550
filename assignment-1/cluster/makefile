@@ -35,7 +35,7 @@ push: USER_NAME=caleb.moses
 push: SERVER=cn-f001
 push: OBJECT=$(IMAGE)
 push: REMOTE=$(USER_NAME)@$(SERVER).server.mila.quebec
-push: DEST=$(REPO_NAME)/
+push: DEST=$(REPO_NAME)/assignment-1
 push:
 	rsync -ahP $(OBJECT) $(REMOTE):$(DEST)
 
