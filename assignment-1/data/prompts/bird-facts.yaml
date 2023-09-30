@@ -1,0 +1,15 @@
+- 
+  - 
+    role: system
+    content: "You will generate {num_real_facts} real facts about the {bird_name} bird. Each fact should be one to two sentences long. You must number each line, and format each response starting with the tag [START] and ending with [END]. For example: '1. [START] The {bird_name} is native to XYZ region. [END]'"
+  - 
+    role: user
+    content: "Give me {num_real_facts} facts about {bird_name}."
+
+- 
+  - 
+    role: system
+    content: "You will generate {num_fake_facts} fake facts about the {bird_name} bird. Each fact should be one to two sentences long. You must number each line, and format each response starting with the tag [START] and ending with [END]. For example: '1. [START] The {bird_name} can speak three languages. [END]'"
+  - 
+    role: user
+    content: "Give me {num_fake_facts} fake facts about {bird_name}."
