@@ -1,3 +1,24 @@
 model:
   llama:
   llama-2-7b-chat:
+bird:
+  bellbird:
+    name: Bellbird (Korimako)
+  fantail:
+    name: Fantail (Pīwakawaka)
+  kea:
+    name: Kea bird
+  kererū:
+    name: Kererū
+  kiwi:
+    name: Kiwi bird
+  new_zealand_falcon:
+    name: New Zealand Falcon (Kārearea)
+  pūkeko:
+    name: Pūkeko
+  rock_wren:
+    name: Rock Wren (Pīwauwau)
+  tomtit:
+    name: Tomtit (Miromiro)
+  tūī:
+    name: Tūī

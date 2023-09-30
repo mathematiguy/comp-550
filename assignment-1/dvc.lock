@@ -21,5 +21,479 @@ stages:
     outs:
     - path: report/article.pdf
       hash: md5
-      md5: efec0167c269813dd22f05b02aadbef5
+      md5: 865daa1395f2832acf93dae441e4becb
       size: 411934
+  generate@kiwi:
+    cmd: python3 scripts/generate_bird_facts.py --bird kiwi --bird-name "Kiwi bird"
+      --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/kiwi_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/kiwi_facts.yaml
+      hash: md5
+      md5: 1c30241868ac3d15e27f968666ae24cf
+      size: 11663
+  generate@tūī:
+    cmd: python3 scripts/generate_bird_facts.py --bird tūī --bird-name "Tūī" --num-real-facts
+      50 --num-fake-facts 50 --output-path data/generations/tūī_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/tūī_facts.yaml
+      hash: md5
+      md5: eef79bed75f6aaec5c636f3a1e67769f
+      size: 15748
+  generate@kererū:
+    cmd: python3 scripts/generate_bird_facts.py --bird kererū --bird-name "Kererū"
+      --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/kererū_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/kererū_facts.yaml
+      hash: md5
+      md5: f5f1096a3fd79636247fce041fb16c94
+      size: 11231
+  generate@kea:
+    cmd: python3 scripts/generate_bird_facts.py --bird kea --bird-name "Kea bird"
+      --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/kea_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/kea_facts.yaml
+      hash: md5
+      md5: 28b8615aff764efe4cf2bcf1c936ad0b
+      size: 14050
+  generate@pūkeko:
+    cmd: python3 scripts/generate_bird_facts.py --bird pūkeko --bird-name "Pūkeko"
+      --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/pūkeko_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/pūkeko_facts.yaml
+      hash: md5
+      md5: 83b329747165f44e8e7b3e48fc394988
+      size: 12313
+  generate@pīwakawaka:
+    cmd: python3 scripts/generate_bird_facts.py --bird pīwakawaka --output-path data/generations/pīwakawaka_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 42e3e4f39000323e89f50ff766003eef
+      size: 666
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 47f3c486c9151c175b4b50bb7cd5479e
+      size: 2164
+    outs:
+    - path: data/generations/pīwakawaka_facts.yaml
+      hash: md5
+      md5: 70059097dc67c99d86fe6afbe9e468f9
+      size: 14208
+  generate@korimako:
+    cmd: python3 scripts/generate_bird_facts.py --bird korimako --output-path data/generations/korimako_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 42e3e4f39000323e89f50ff766003eef
+      size: 666
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 47f3c486c9151c175b4b50bb7cd5479e
+      size: 2164
+    outs:
+    - path: data/generations/korimako_facts.yaml
+      hash: md5
+      md5: ac43129e50735e8266235f65c9ab0794
+      size: 13728
+  generate@miromiro:
+    cmd: python3 scripts/generate_bird_facts.py --bird miromiro --output-path data/generations/miromiro_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 42e3e4f39000323e89f50ff766003eef
+      size: 666
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 47f3c486c9151c175b4b50bb7cd5479e
+      size: 2164
+    outs:
+    - path: data/generations/miromiro_facts.yaml
+      hash: md5
+      md5: 08cb9dba0cdc54fef693deb5b80d126d
+      size: 9664
+  generate@pīwauwau:
+    cmd: python3 scripts/generate_bird_facts.py --bird pīwauwau --output-path data/generations/pīwauwau_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 42e3e4f39000323e89f50ff766003eef
+      size: 666
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 47f3c486c9151c175b4b50bb7cd5479e
+      size: 2164
+    outs:
+    - path: data/generations/pīwauwau_facts.yaml
+      hash: md5
+      md5: 5b7f013dcd29c92623fd46d42692039f
+      size: 13610
+  generate@kārearea:
+    cmd: python3 scripts/generate_bird_facts.py --bird kārearea --output-path data/generations/kārearea_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 42e3e4f39000323e89f50ff766003eef
+      size: 666
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 47f3c486c9151c175b4b50bb7cd5479e
+      size: 2164
+    outs:
+    - path: data/generations/kārearea_facts.yaml
+      hash: md5
+      md5: 9e385009ec21db3d9ff5989b9232aee8
+      size: 14594
+  generate@fantail:
+    cmd: python3 scripts/generate_bird_facts.py --bird fantail --bird-name "Fantail
+      (Pīwakawaka)" --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/fantail_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/fantail_facts.yaml
+      hash: md5
+      md5: fc4ecaac01e01e25d929ad04f669e1b0
+      size: 13425
+  generate@bellbird:
+    cmd: python3 scripts/generate_bird_facts.py --bird bellbird --bird-name "Bellbird
+      (Korimako)" --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/bellbird_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/bellbird_facts.yaml
+      hash: md5
+      md5: 6a8d6f56f9bc262b0d9e0c3b3b53e27d
+      size: 13601
+  generate@tomtit:
+    cmd: python3 scripts/generate_bird_facts.py --bird tomtit --bird-name "Tomtit
+      (Miromiro)" --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/tomtit_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/tomtit_facts.yaml
+      hash: md5
+      md5: 4e54601d7e57dded5af760b0fb09a5ed
+      size: 13376
+  generate@rock_wren:
+    cmd: python3 scripts/generate_bird_facts.py --bird rock_wren --bird-name "Rock
+      Wren (Pīwauwau)" --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/rock_wren_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/rock_wren_facts.yaml
+      hash: md5
+      md5: a8807ec00f5bfa75b5ecad9997f6a749
+      size: 14333
+  generate@new_zealand_falcon:
+    cmd: python3 scripts/generate_bird_facts.py --bird new_zealand_falcon --bird-name
+      "New Zealand Falcon (Kārearea)" --num-real-facts 50 --num-fake-facts 50 --output-path
+      data/generations/new_zealand_falcon_facts.yaml
+    deps:
+    - path: data/prompts/bird-facts.yaml
+      hash: md5
+      md5: 1ede04aa00c0d0e651ad8dd494ecc82f
+      size: 856
+    - path: models/llama
+      hash: md5
+      md5: 72221113c631bfe8e939d3c88df16217.dir
+      size: 511559
+      nfiles: 4
+    - path: models/llama-2-7b-chat
+      hash: md5
+      md5: 3b8e50c789f3b12896d520de9b7e4f1a.dir
+      size: 13476925365
+      nfiles: 3
+    - path: models/llama/tokenizer.model
+      hash: md5
+      md5: eeec4125e9c7560836b4873b6f8e3025
+      size: 499723
+    - path: scripts/generate_bird_facts.py
+      hash: md5
+      md5: 60cf92349a7c3d530222a4fe480ca452
+      size: 2556
+    outs:
+    - path: data/generations/new_zealand_falcon_facts.yaml
+      hash: md5
+      md5: a8774c1520a0d0b53f1e5f4d4d08262a
+      size: 14832
+  build:
+    cmd: python3 scripts/build_bird_dataset.py --directory data/generations
+    deps:
+    - path: data/generations
+      hash: md5
+      md5: 4f925a0731ab4304f1deeb39ae224950.dir
+      size: 134886
+      nfiles: 12
+    outs:
+    - path: data/bird_data.csv
+      hash: md5
+      md5: aa32bb69203f8a9ad64b18e3f48a553c
+      size: 111760
