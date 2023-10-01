@@ -15,7 +15,7 @@ ninja
 nltk
 numpy
 pandas
-pymc3
+pymc
 safetensors
 scikit-learn
 scipy
