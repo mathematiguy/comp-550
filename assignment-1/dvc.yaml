@@ -29,3 +29,10 @@ stages:
       - data/generations
     outs:
       - data/bird_data.csv
+  run_trials:
+    cmd: python3 scripts/run_experiments.py --bird-data-path data/bird_data.csv --num-trials 1000 --path data/trials.csv
+    deps:
+      - data/bird_data.csv
+      - scripts/run_experiments.py
+    outs:
+      - data/trials.csv

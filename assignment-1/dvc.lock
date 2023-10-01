@@ -497,3 +497,20 @@ stages:
       hash: md5
       md5: aa32bb69203f8a9ad64b18e3f48a553c
       size: 111760
+  run_trials:
+    cmd: python3 scripts/run_experiments.py --bird-data-path data/bird_data.csv --num-trials
+      1000 --path data/trials.csv
+    deps:
+    - path: data/bird_data.csv
+      hash: md5
+      md5: aa32bb69203f8a9ad64b18e3f48a553c
+      size: 111760
+    - path: scripts/run_experiments.py
+      hash: md5
+      md5: 0863f9be7d1c7820eae85d041b068f22
+      size: 7104
+    outs:
+    - path: data/trials.csv
+      hash: md5
+      md5: 8dedadc2628bc413d4ea5123dacd43c5
+      size: 40839
