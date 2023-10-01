@@ -11,6 +11,9 @@ stages:
     cmd: bash -c "cd report && latexmk article.tex -pdf"
     outs:
       - report/article.pdf
+    deps:
+      - report/article.tex
+      - report/structure.tex
   generate:
     foreach: ${bird}
     do:
