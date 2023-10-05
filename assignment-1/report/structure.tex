@@ -45,6 +45,11 @@ dottedtoc % Dotted lines leading to the page numbers in the table of contents
 
 \usepackage{varioref} % More descriptive referencing
 
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{booktabs}
+
+
 %----------------------------------------------------------------------------------------
 %	THEOREM STYLES
 %---------------------------------------------------------------------------------------
@@ -71,4 +76,18 @@ pdfsubject={}, % PDF Subject
 pdfkeywords={}, % PDF Keywords
 pdfcreator={pdfLaTeX}, % PDF Creator
 pdfproducer={LaTeX with hyperref and ClassicThesis} % PDF producer
+}
+
+% Redefine caption for listings
+\renewcommand\lstlistingname{Prompt}
+\captionsetup[lstlisting]{labelsep=space, singlelinecheck=false, font={bf,footnotesize}, labelfont=bf}
+
+\lstdefinestyle{myCustomStyle}{
+  basicstyle=\ttfamily\small,
+  frame=single,
+  breaklines=true
+  numbers=left,
+  numberstyle=\tiny,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
 }

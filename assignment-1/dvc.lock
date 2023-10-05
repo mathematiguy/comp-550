@@ -18,11 +18,20 @@ stages:
       nfiles: 3
   report:
     cmd: bash -c "cd report && latexmk article.tex -pdf"
+    deps:
+    - path: report/article.tex
+      hash: md5
+      md5: a8580e330627b16bcf421561001529e8
+      size: 10572
+    - path: report/structure.tex
+      hash: md5
+      md5: 494606fed42d18fc2b1eea902db9f644
+      size: 3496
     outs:
     - path: report/article.pdf
       hash: md5
-      md5: 865daa1395f2832acf93dae441e4becb
-      size: 411934
+      md5: 2cab3a21d2268eb2a788a2b8868008c4
+      size: 162838
   generate@kiwi:
     cmd: python3 scripts/generate_bird_facts.py --bird kiwi --bird-name "Kiwi bird"
       --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/kiwi_facts.yaml

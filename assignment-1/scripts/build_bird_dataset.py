@@ -17,7 +17,7 @@ def load_and_compile_bird_data(directory):
     for filename in filenames:
         if filename.startswith('.'):
             continue
-        
+
         bird_name = filename.replace('_facts.yaml', '')
 
         with open(os.path.join(directory, filename), 'r') as file:
@@ -40,7 +40,7 @@ def nested_dict_to_dataframe(data):
                     'Fact Type': fact_type,
                     'Fact': fact
                 })
-                
+
     df = pd.DataFrame(rows)
     return df
 
