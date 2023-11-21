@@ -159,7 +159,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 **/.#*
-**.sif
+**/*.sif
 **/.DS_Store
 /reading-assignment/report/article.pdf
 /reading-assignment/report/article.aux

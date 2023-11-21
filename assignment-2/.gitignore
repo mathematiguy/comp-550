@@ -1,0 +1,14 @@
+**/.#*
+.env
+comp-550.sif
+models/
+report/*.aux
+report/*.bbl
+report/*.blg
+report/*.fdb_latexmk
+report/*.fls
+report/*.log
+report/*.out
+report/*.pdf
+report/*.toc
+data/

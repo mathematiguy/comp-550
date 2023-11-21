@@ -1,0 +1,201 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Arsclassica Article
+% LaTeX Template
+% Version 1.1 (1/8/17)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Lorenzo Pantieri (http://www.lorenzopantieri.net) with extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+10pt, % Main document font size
+a4paper, % Paper type, use 'letterpaper' for US Letter paper
+oneside, % One page layout (no page indentation)
+%twoside, % Two page layout (page indentation for binding and different headers)
+headinclude,footinclude, % Extra spacing for the header and footer
+BCOR5mm, % Binding correction
+]{scrartcl}
+
+\input{structure.tex} % Include the structure.tex file which specified the document structure and layout
+
+\hyphenation{Fortran hy-phen-ation} % Specify custom hyphenation points in words with dashes where you would like hyphenation to occur, or alternatively, don't put any dashes in a word to stop hyphenation altogether
+
+%----------------------------------------------------------------------------------------
+%	TITLE AND AUTHOR(S)
+%----------------------------------------------------------------------------------------
+
+\title{\normalfont\spacedallcaps{Comp 550: Programming Assignment 1}} % The article title
+
+%\subtitle{Subtitle} % Uncomment to display a subtitle
+
+\author{\spacedlowsmallcaps{Caleb Moses*}} % The article author(s) - author affiliations need to be specified in the AUTHOR AFFILIATIONS block
+
+\date{} % An optional date to appear under the author(s)
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	HEADERS
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\sectionmark}[1]{\markright{\spacedlowsmallcaps{#1}}} % The header for all pages (oneside) or for even pages (twoside)
+%\renewcommand{\subsectionmark}[1]{\markright{\thesubsection~#1}} % Uncomment when using the twoside option - this modifies the header on odd pages
+\lehead{\mbox{\llap{\small\thepage\kern1em\color{halfgray} \vline}\color{halfgray}\hspace{0.5em}\rightmark\hfil}} % The header style
+
+\pagestyle{scrheadings} % Enable the headers specified in this block
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS & LISTS OF FIGURES AND TABLES
+%----------------------------------------------------------------------------------------
+
+\maketitle % Print the title/author/date block
+
+\setcounter{tocdepth}{2} % Set the depth of the table of contents to show sections and subsections only
+
+%% \listoffigures % Print the list of figures
+
+%% \listoftables % Print the list of tables
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+%% \section*{Abstract} % This section will not appear in the table of contents due to the star (\section*)
+
+%% This paper explores the role of artificial intelligence for natural language in supporting communities affected by colonialism to reclaim and revitalise their languages. We order well known research questions in natural language processing for low research languages by their potential impact for language reclamation, and also explain the necessary language data required for these. Availability of language data varies widely by community and also data type such as written, audio-video or image scans. Fundamentally we aim to bridge a gap between industry, where much work in this area exists, and community where data is often available but not easily utilised due to funding and technical capability gaps.
+
+%----------------------------------------------------------------------------------------
+%	AUTHOR AFFILIATIONS
+%----------------------------------------------------------------------------------------
+
+\let\thefootnote\relax\footnotetext{* \textit{PhD Student, School of Computer Science, McGill University, Montreal, Canada}}
+
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+
+This report describes a text classifier trained on fake and real facts about New Zealand birds generated by a Large Language Model, Llama ~\cite{touvron2023llama} by Meta AI Research.
+
+%----------------------------------------------------------------------------------------
+%	METHODS
+%----------------------------------------------------------------------------------------
+
+\section{Dataset generation}
+
+I began by taking the open source model Llama-2 and prompting it to produce bird facts using the following prompts:
+
+\begin{lstlisting}[style=myCustomStyle, caption=Real bird facts]
+  SYSTEM: You will generate {num_real_facts} real facts about the {bird_name} bird. Each fact should be one to two sentences long. You must number each line, and format each response starting with the tag [START] and ending with [END]. For example: '1. [START] The {bird_name} is native to XYZ region. [END]'
+  USER: Give me {num_real_facts} facts about {bird_name}.
+\end{lstlisting}
+
+\begin{lstlisting}[style=myCustomStyle, caption=Fake bird facts]
+  SYSTEM: You will generate {num_fake_facts} fake facts about the {bird_name} bird. Each fact should be one to two sentences long. You must number each line, and format each response starting with the tag [START] and ending with [END]. For example: '1. [START] The {bird_name} can speak three languages. [END]'
+
+  USER: Give me {num_fake_facts} facts about {bird_name}.
+\end{lstlisting}
+
+The number of real and fake facts were each set to 50, and the bird name was interpolated across the following ten New Zealand birds:
+
+\begin{itemize}
+\item Bellbird (Korimako)
+\item Fantail (Pīwakawaka)
+\item Kea bird
+\item Kererū
+\item Kiwi bird
+\item New Zealand Falcon (Kārearea)
+\item Pūkeko
+\item Rock Wren (Pīwauwau)
+\item Tomtit (Miromiro)
+\item Tūī
+\end{itemize}
+
+This resulted in 10 birds times 50 prompts each with real and fake facts, totalling in 10 x 50 x 2 = 1000 unique facts.
+
+\section{Experimental procedure}
+
+Once I had generated the full list of facts to work with, I separated them into a train-dev-test split according to a 60-20-20 rule. This means my training set contained 600 samples, and my dev and test set each contained 200.
+
+\subsection{The range of parameters}
+I then wrote a model factory to allow me to initialise a wide range of models each with different hyperparameters and different pre-processing, covering the following:
+
+\begin{itemize}
+\item Lemmatization
+\item Stop-word removal
+\item n-grams
+\item Stemming
+\item Treebank Part of Speech Labelling
+\item Vocab limit
+\item Classifier type
+\end{itemize}
+
+For the classifier type, we considered the SGD classifier, Logistic Regression, Naive Bayes and Support Vector Machine. To make things easier, each classifier was implemented according to its defaults in Scikit-Learn. N-grams were considered in the range of 0-5, and the stop-word list, lemmatization, stemming and so forth were implemented using nltk.
+
+\subsection{Results}
+
+In order to determine which parameters were the most effective for improving the model, a logistic regression was implemented. We assumed the model accuracy was a linear function, including an intercept and parameters for each of the model hyperparameters, including the classifier type. We then trained 1000 different models according to randomly selected hyperparameters and used these to fit the logistic regression model. The resulting coefficients of this model are given in Table \ref{tab:my_label}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{lr}
+    \toprule
+    Feature & Coefficient \\
+    \midrule
+    Intercept & 0.975430 \\
+    SVM & 0.006330 \\
+    Logistic & 0.006153 \\
+    SGD & 0.003856 \\
+    Vocab Limit & 0.003698 \\
+    N-grams & 0.000948 \\
+    Lemmatization & 0.000368 \\
+    Treebank POS & 0.000076 \\
+    Stemming & -0.001314 \\
+    Stopword Removal & -0.001812 \\
+    Naive Bayes & -0.016053 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Coefficients from the logistic regression model representing the influence of each hyperparameter on model accuracy.}
+  \label{tab:my_label}
+\end{table}
+
+From the regression we can see that on average most of the models did quite well since the Intercept is 0.975. From there, the choice of classifier seemed to make the most significant positive difference in the model, with SVM and logistic regression doing quite well. From there, considerations for pre-processing and so forth were of secondary significance.
+
+\subsection{Conclusion}
+
+We were able to show that training a linear classifier with reasonably high accuracy (0.975\% on average across 1000 trials) is quite straightforward. It was not clear to me before we did this that fitting a classifier with high accuracy on a task like this would be possible, so that was interesting.
+
+\subsection{Limitation}
+
+The idea that word frequencies correspond to truth/falsehood is a simplifying assumption that we made in order to implement this model. The truth is word frequencies are not sufficient to estimate truth/falsehood, and in my own experiments I was able to generate many examples that could fool the model. For that reason I think it would be more accurate to say that we trained a model that was fit for distinguish some generated text fitting a fairly tight set of criteria.
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\refname}{\spacedlowsmallcaps{References}} % For modifying the bibliography heading
+
+\bibliographystyle{unsrt}
+
+\bibliography{sample.bib} % The file containing the bibliography
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
