@@ -8,6 +8,9 @@ VENV_PATH ?= venv
 
 .PHONY: report clean jupyter container shell
 
+loader:
+	$(RUN) python3 code/loader.py
+
 repro:
 	$(RUN) dvc repro
 
