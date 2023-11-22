@@ -1,12 +1,4 @@
-params:
-  - model
 stages:
-  download_models:
-    foreach: ${model}
-    do:
-      cmd: bash src/download.sh models ${key}
-      outs:
-        - models/${key}
   report:
     cmd: bash -c "cd report && latexmk article.tex -pdf"
     outs:
@@ -14,28 +6,3 @@ stages:
     deps:
       - report/article.tex
       - report/structure.tex
-  generate:
-    foreach: ${bird}
-    do:
-      cmd: python3 scripts/generate_bird_facts.py --bird ${key} --bird-name "${item.name}" --num-real-facts 50 --num-fake-facts 50 --output-path data/generations/${key}_facts.yaml
-      deps:
-        - models/llama
-        - models/llama-2-7b-chat
-        - models/llama/tokenizer.model
-        - data/prompts/bird-facts.yaml
-        - scripts/generate_bird_facts.py
-      outs:
-        - data/generations/${key}_facts.yaml
-  build:
-    cmd: python3 scripts/build_bird_dataset.py --directory data/generations
-    deps:
-      - data/generations
-    outs:
-      - data/bird_data.csv
-  run_trials:
-    cmd: python3 scripts/run_experiments.py --bird-data-path data/bird_data.csv --num-trials 1000 --path data/trials.csv
-    deps:
-      - data/bird_data.csv
-      - scripts/run_experiments.py
-    outs:
-      - data/trials.csv

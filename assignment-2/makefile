@@ -6,17 +6,10 @@ SINGULARITY_ARGS ?=
 FLAGS ?=
 VENV_PATH ?= venv
 
-.PHONY: test_llama convert_llama_weights clean jupyter container shell
+.PHONY: report clean jupyter container shell
 
-test_llama:
-	$(RUN) torchrun --nproc_per_node 1 submodules/llama/example_chat_completion.py \
-		--ckpt_dir models/llama-2-7b-chat/ \
-		--tokenizer_path models/llama/tokenizer.model \
-		--max_seq_len 512 --max_batch_size 6
-
-convert_llama_weights:
-	$(RUN) python3 submodules/transformers/src/transformers/models/llama/convert_llama_weights_to_hf.py \
-    --input_dir models/llama-2-7b --model_size 7B --output_dir hf_models/llama-2-7b
+repro:
+	$(RUN) dvc repro
 
 clean:
 	rm -f report/*.blg report/*.fls report/*.out report/*.log report/*.fdb_latexmk report/*.aux report/*.pdf report/*.bbl report/*.toc

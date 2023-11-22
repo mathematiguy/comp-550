@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  report:
+    cmd: bash -c "cd report && latexmk article.tex -pdf"
+    deps:
+    - path: report/article.tex
+      hash: md5
+      md5: a8580e330627b16bcf421561001529e8
+      size: 10572
+    - path: report/structure.tex
+      hash: md5
+      md5: 494606fed42d18fc2b1eea902db9f644
+      size: 3496
+    outs:
+    - path: report/article.pdf
+      hash: md5
+      md5: b1eb419154791ba866bab1ffee99408b
+      size: 162838
