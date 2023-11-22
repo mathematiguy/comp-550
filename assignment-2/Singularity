@@ -10,7 +10,9 @@ From: texlive/texlive:latest-full-doc
     SHELL=/bin/bash
     PYTHON_VERSION=3.9
     PATH="/opt/local/bin:${PATH}"
+    PYTHONPATH="/opt:${PATH}"
     export SHELL PYTHON_VERSION PATH PYTHONPATH
+
 %files
     requirements.txt requirements.txt
 
@@ -36,11 +38,6 @@ From: texlive/texlive:latest-full-doc
     add-apt-repository ppa:deadsnakes/ppa -y
     add-apt-repository ppa:rmescandon/yq -y
 
-    # Installing LaTeX packages...
-    tlmgr init-usertree && \
-    tlmgr update --all
-    tlmgr install koma-script
-
     # Install yq (yaml processing)
     apt install -y yq
 
@@ -65,9 +62,6 @@ From: texlive/texlive:latest-full-doc
 
     echo "Installing python requirements"
     pip3 install -r requirements.txt
-
-    echo "Install llama submodule"
-    pip3 install -e /opt/llama
 
     echo "Install NLTK data"
     /opt/local/bin/python3.11 -m nltk.downloader -d /opt/local/share/nltk_data all

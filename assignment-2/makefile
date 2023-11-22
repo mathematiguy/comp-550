@@ -1,12 +1,10 @@
 # This Makefile automates routine tasks for this Singularity-based project.
 REPO_NAME := $(shell basename `git rev-parse --show-toplevel` | tr '[:upper:]' '[:lower:]')
 IMAGE := $(REPO_NAME).sif
-RUN ?= singularity exec --nv $(FLAGS) -B submodules/llama:/opt/llama $(IMAGE)
+RUN ?= singularity exec $(FLAGS) $(IMAGE)
 SINGULARITY_ARGS ?=
 FLAGS ?=
 VENV_PATH ?= venv
-
-include cluster/makefile
 
 .PHONY: test_llama convert_llama_weights clean jupyter container shell
 
