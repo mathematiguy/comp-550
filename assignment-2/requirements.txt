@@ -5,13 +5,12 @@ dvc
 ipython
 jupyter
 jupyterlab
+matplotlib
 nltk
 numpy
 pandas
-prefect
 scikit-learn
 scipy
 torch>=2.0.1
 tqdm
 transformers
-sqlite >= 3.24.0
