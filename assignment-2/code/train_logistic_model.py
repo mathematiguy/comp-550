@@ -30,7 +30,7 @@ stop_words = set(stopwords.words('english'))
 # Import custom modules
 from build_seed_set import load_seed_dataset
 
-def build_seed_examples(seed_dataset_path):
+def build_seed_examples(seed_dataset_path, output_path):
     # Load the seed dataset
     seed_dataset = load_seed_dataset(seed_dataset_path)
     
@@ -41,6 +41,8 @@ def build_seed_examples(seed_dataset_path):
     seed_examples = seed_examples.explode('text')
     seed_examples = seed_examples[seed_examples.apply(lambda x: x.word in x.text, axis=1)]
     seed_examples = seed_examples.reset_index(drop=True)
+
+    seed_examples.to_csv(output_path, index=False)
 
     return seed_examples
 

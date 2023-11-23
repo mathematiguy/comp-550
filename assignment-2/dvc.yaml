@@ -24,6 +24,7 @@ stages:
     cmd: python code/train_logistic_model.py --data_path data/seed_set_data.csv --model_path data/logistic.joblib
     outs:
       - data/logistic.joblib
+      - data/seed_examples.csv
     deps:
       - code/train_logistic_model.py
       - data/seed_set_data.csv
