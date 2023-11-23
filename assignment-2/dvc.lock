@@ -14,5 +14,5 @@ stages:
     outs:
     - path: report/article.pdf
       hash: md5
-      md5: b1eb419154791ba866bab1ffee99408b
+      md5: a070b6e1f334b86b93ebc5ff8d660710
       size: 162838
