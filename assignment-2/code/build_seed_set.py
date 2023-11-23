@@ -121,10 +121,10 @@ def load_seed_dataset(csv_path):
     """
     logging.info(f"Saving DataFrame to {csv_path}")
     seed_data = pd.read_csv(csv_path)
-    seed_data["examples"] = seed_data_to_save[
+    seed_data["examples"] = seed_data[
         "examples"
     ].apply(json.loads)
-    seed_data["generated_examples"] = seed_data_to_save[
+    seed_data["generated_examples"] = seed_data[
         "generated_examples"
     ].apply(json.loads)
     return seed_data
