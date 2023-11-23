@@ -66,34 +66,34 @@ def build_dataframe(dev_key):
     Build the initial dataframe from the WordNet data.
     """
     logging.info("Building the DataFrame from WordNet data")
-    lemma_sense_keys = sorted(set(key for keys in dev_key.values() for key in keys))
-    lemma_sense_key_data = pd.DataFrame({"sense_key": lemma_sense_keys})
+    seeds = sorted(set(key for keys in dev_key.values() for key in keys))
+    seed_data = pd.DataFrame({"sense_key": seeds})
 
-    lemma_sense_key_data["synset_id"] = lemma_sense_key_data["sense_key"].apply(
+    seed_data["synset_id"] = seed_data["sense_key"].apply(
         synset_from_key
     )
-    lemma_sense_key_data["word"] = (
-        lemma_sense_key_data["synset_id"].str.split(".").apply(lambda x: x[0])
+    seed_data["word"] = (
+        seed_data["synset_id"].str.split(".").apply(lambda x: x[0])
     )
-    lemma_sense_key_data["definition"] = lemma_sense_key_data["synset_id"].apply(
+    seed_data["definition"] = seed_data["synset_id"].apply(
         get_synset_definition
     )
-    lemma_sense_key_data["examples"] = lemma_sense_key_data["synset_id"].apply(
+    seed_data["examples"] = seed_data["synset_id"].apply(
         get_synset_examples
     )
-    lemma_sense_key_data["prompt"] = lemma_sense_key_data.apply(
+    seed_data["prompt"] = seed_data.apply(
         lambda x: generate_prompt(x["word"], x["definition"], x["examples"]), axis=1
     )
 
-    return lemma_sense_key_data
+    return seed_data
 
 
-def generate_text(lemma_sense_key_data, pipeline, tokenizer, batch_size):
+def generate_text(seed_data, pipeline, tokenizer, batch_size):
     """
     Generate text using the provided pipeline and batch size.
     """
     logging.info("Generating text using the pipeline")
-    prompts = lemma_sense_key_data["prompt"].tolist()
+    prompts = seed_data["prompt"].tolist()
     dataset = Dataset.from_dict({"prompt": prompts})
 
     results = []
@@ -105,29 +105,44 @@ def generate_text(lemma_sense_key_data, pipeline, tokenizer, batch_size):
             top_k=10,
             num_return_sequences=1,
             eos_token_id=tokenizer.eos_token_id,
-            max_length=400,
+            max_length=400
         )
         results.extend(batch_results)
 
-    lemma_sense_key_data["generated_text"] = [r[0]["generated_text"] for r in results]
-    lemma_sense_key_data["generated_examples"] = lemma_sense_key_data[
+    seed_data["generated_text"] = [r[0]["generated_text"] for r in results]
+    seed_data["generated_examples"] = seed_data[
         "generated_text"
     ].apply(extract_examples)
 
 
-def save_dataframe(lemma_sense_key_data, csv_path):
+def load_seed_dataset(csv_path):
+    """
+    Load the DataFrame from CSV file.
+    """
+    logging.info(f"Saving DataFrame to {csv_path}")
+    seed_data = pd.read_csv(csv_path)
+    seed_data["examples"] = seed_data_to_save[
+        "examples"
+    ].apply(json.loads)
+    seed_data["generated_examples"] = seed_data_to_save[
+        "generated_examples"
+    ].apply(json.loads)
+    return seed_data
+
+
+def save_seed_dataset(seed_data, csv_path):
     """
     Save the DataFrame to a CSV file.
     """
     logging.info(f"Saving DataFrame to {csv_path}")
-    lemma_sense_key_data_to_save = lemma_sense_key_data.copy()
-    lemma_sense_key_data_to_save["examples"] = lemma_sense_key_data_to_save[
+    seed_data_to_save = seed_data.copy()
+    seed_data_to_save["examples"] = seed_data_to_save[
         "examples"
     ].apply(json.dumps)
-    lemma_sense_key_data_to_save["generated_examples"] = lemma_sense_key_data_to_save[
+    seed_data_to_save["generated_examples"] = seed_data_to_save[
         "generated_examples"
     ].apply(json.dumps)
-    lemma_sense_key_data_to_save.to_csv(csv_path, index=False)
+    seed_data_to_save.to_csv(csv_path, index=False)
 
 
 @click.command()
@@ -162,13 +177,13 @@ def cli(model_path, batch_size, csv_path):
     dev_key, test_key = load_key("data/wordnet.en.key")
 
     # Build the DataFrame
-    lemma_sense_key_data = build_dataframe(dev_key)
+    seed_data = build_dataframe(dev_key)
 
     # Run text generation
-    generate_text(lemma_sense_key_data, text_generation_pipeline, tokenizer, batch_size)
+    generate_text(seed_data, text_generation_pipeline, tokenizer, batch_size)
 
     # Save the DataFrame
-    save_dataframe(lemma_sense_key_data, csv_path)
+    save_dataframe(seed_data, csv_path)
 
 
 if __name__ == "__main__":
