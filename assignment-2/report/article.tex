@@ -119,7 +119,7 @@ When SemCor initially failed to perform well, I convinced myself that the datase
 
 When I gave up on SemCor I chose to use a Large Language Model (Llama-2-7B-Chat from Meta AI Research) in order to generate a seed set for bootstrapping. I did this by using wordnet to extract definitions and examples for each of the synsets covered in the dev set from SemEval. I then used those definitions to engineer prompts that asked Llama 2 to generate more examples in the same vein.
 
-In order to have enough train and test examples for each of the synsets under consideration, I generated examples until there were at least 10 examples of each synset. Then, I used the seed set I generated to train a multiple-output logistic regression model for classifying each of the synsets under consideration. It was at this point that I noticed that I could improve the model significantly by turning off regularisation and turning on class balancing.
+In order to have enough train and test examples for each of the synsets under consideration, I generated examples until there were at least 10 examples of each synset. Then, I used the seed set I generated to train a multiple-output logistic regression model for classifying each of the synsets under consideration. It was at this point that I noticed that I could improve the model significantly by turning off regularisation and turning on class balancing. The Logistic Regression model achieved a test set accuracy of 77.1\%.
 
 However, working with Llama 2 was a complex task that turned out to be time consuming and as a result I was not able to complete the bootstrap model as intended.
 
