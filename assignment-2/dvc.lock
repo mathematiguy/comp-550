@@ -14,5 +14,25 @@ stages:
     outs:
     - path: report/article.pdf
       hash: md5
-      md5: a070b6e1f334b86b93ebc5ff8d660710
+      md5: e20cfbe3ec8fb19b5a774acbe2bd68ed
       size: 162838
+  sem_eval_data:
+    cmd: python3 code/build_sem_eval_data.py --csv_path data/sem_eval_data.csv
+    deps:
+    - path: code/build_sem_eval_data.py
+      hash: md5
+      md5: 71e7afe3047f5397105734811472e81a
+      size: 3289
+    - path: data/multilingual-all-words.en.xml
+      hash: md5
+      md5: 8688aac38e0e14e3d57162ffb0414e75
+      size: 414433
+    - path: data/wordnet.en.key
+      hash: md5
+      md5: 38f35aad3990dcb44a223ca44f25703e
+      size: 64327
+    outs:
+    - path: data/sem_eval_data.csv
+      hash: md5
+      md5: cc11dab91de19fc92a7584faf98227bb
+      size: 995386

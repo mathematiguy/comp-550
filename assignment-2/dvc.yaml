@@ -6,3 +6,11 @@ stages:
     deps:
       - report/article.tex
       - report/structure.tex
+  sem_eval_data:
+    cmd: python3 code/build_sem_eval_data.py --csv_path data/sem_eval_data.csv
+    outs:
+      - data/sem_eval_data.csv
+    deps:
+      - code/build_sem_eval_data.py
+      - data/multilingual-all-words.en.xml
+      - data/wordnet.en.key

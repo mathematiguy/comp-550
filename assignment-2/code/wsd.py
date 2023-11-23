@@ -28,7 +28,7 @@ def preprocess(sentence, stop_words=stop_words, lemmatizer=lemmatizer):
     return processed
 
 
-def lesk(lemma, context):
+def wordnet_lesk(lemma, context):
     """
     Lesk's algorithm implementation.
     Assumes preprocessed_context is a set of lemmatized words without stop words.
