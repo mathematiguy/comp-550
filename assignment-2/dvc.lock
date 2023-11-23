@@ -5,8 +5,8 @@ stages:
     deps:
     - path: report/article.tex
       hash: md5
-      md5: e8c6dedadd81351ed1ce63edf2c32e69
-      size: 10715
+      md5: 9a2603558710fa098ab9e28a2e145852
+      size: 10785
     - path: report/structure.tex
       hash: md5
       md5: 494606fed42d18fc2b1eea902db9f644
@@ -14,8 +14,8 @@ stages:
     outs:
     - path: report/article.pdf
       hash: md5
-      md5: 08a1c5e280a1d6caf16d561dbe9c30a7
-      size: 120998
+      md5: 21d110835c60e8e3606aedde13b4de75
+      size: 121095
   sem_eval_data:
     cmd: python3 code/build_sem_eval_data.py --csv_path data/sem_eval_data.csv
     deps:
