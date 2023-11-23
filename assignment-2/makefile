@@ -1,7 +1,8 @@
 # This Makefile automates routine tasks for this Singularity-based project.
 REPO_NAME := $(shell basename `git rev-parse --show-toplevel` | tr '[:upper:]' '[:lower:]')
 IMAGE := $(REPO_NAME).sif
-RUN ?= singularity exec $(FLAGS) $(IMAGE)
+MODEL ?= /network/weights/llama.var/llama2/Llama-2-7b-chat-hf
+RUN ?= singularity exec --nv $(FLAGS) -B $(MODEL):$(MODEL) $(IMAGE)
 SINGULARITY_ARGS ?=
 FLAGS ?=
 VENV_PATH ?= venv
@@ -44,4 +45,4 @@ push:
 
 # Starts a shell within the Singularity container, with the virtual environment activated.
 shell:
-	singularity shell $(FLAGS) $(IMAGE) $(SINGULARITY_ARGS) bash
+	singularity shell --nv $(FLAGS) -B $(MODEL) $(IMAGE) $(SINGULARITY_ARGS) bash

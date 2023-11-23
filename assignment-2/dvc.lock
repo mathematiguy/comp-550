@@ -14,15 +14,15 @@ stages:
     outs:
     - path: report/article.pdf
       hash: md5
-      md5: e20cfbe3ec8fb19b5a774acbe2bd68ed
+      md5: 34f054d0c6282075f2d6369b4b74fc11
       size: 162838
   sem_eval_data:
     cmd: python3 code/build_sem_eval_data.py --csv_path data/sem_eval_data.csv
     deps:
     - path: code/build_sem_eval_data.py
       hash: md5
-      md5: 02a5fbd3d598557a15cd800441002d6d
-      size: 5416
+      md5: fea63653104152d383efaf6bc62ccefd
+      size: 5518
     - path: data/multilingual-all-words.en.xml
       hash: md5
       md5: 8688aac38e0e14e3d57162ffb0414e75
@@ -34,5 +34,5 @@ stages:
     outs:
     - path: data/sem_eval_data.csv
       hash: md5
-      md5: 598b660cbf80612efa8f1ee157e177d8
+      md5: 95623eb83c67d5125d7a1015951a83b5
       size: 1185298

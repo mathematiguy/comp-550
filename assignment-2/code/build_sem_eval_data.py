@@ -85,7 +85,11 @@ def build_sem_eval_data(csv_path):
             )
 
     df = pd.DataFrame(sem_eval_data)
+
+    # Run most frequent synset baseline inference
     df["most_frequent_synset"] = df.lemma.apply(most_frequent_synset)
+
+    # Run nltk lesk algorithm baseline inference
     df["nltk_pred_synset"] = df.apply(
         lambda x: set(
             lemma.key() for lemma in nltk.wsd.lesk(x.context, x.lemma).lemmas()
@@ -95,6 +99,7 @@ def build_sem_eval_data(csv_path):
 
     df.to_csv(csv_path, index=False)
     logging.info(f"Dataframe saved to {csv_path}")
+
     return df
 
 

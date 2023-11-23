@@ -1,3 +1,4 @@
+accelerate
 black
 click
 datasets
