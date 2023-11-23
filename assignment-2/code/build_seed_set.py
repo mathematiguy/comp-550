@@ -49,7 +49,7 @@ def generate_prompt(word, definition, examples):
     )
     if examples:
         prompt += "Examples:\n- " + "\n- ".join(examples) + "\n"
-    prompt += "Please generate 5 more example sentences.\n"
+    prompt += "Please generate 10 more example sentences.\n"
     return prompt
 
 
@@ -69,18 +69,10 @@ def build_dataframe(dev_key):
     seeds = sorted(set(key for keys in dev_key.values() for key in keys))
     seed_data = pd.DataFrame({"sense_key": seeds})
 
-    seed_data["synset_id"] = seed_data["sense_key"].apply(
-        synset_from_key
-    )
-    seed_data["word"] = (
-        seed_data["synset_id"].str.split(".").apply(lambda x: x[0])
-    )
-    seed_data["definition"] = seed_data["synset_id"].apply(
-        get_synset_definition
-    )
-    seed_data["examples"] = seed_data["synset_id"].apply(
-        get_synset_examples
-    )
+    seed_data["synset_id"] = seed_data["sense_key"].apply(synset_from_key)
+    seed_data["word"] = seed_data["synset_id"].str.split(".").apply(lambda x: x[0])
+    seed_data["definition"] = seed_data["synset_id"].apply(get_synset_definition)
+    seed_data["examples"] = seed_data["synset_id"].apply(get_synset_examples)
     seed_data["prompt"] = seed_data.apply(
         lambda x: generate_prompt(x["word"], x["definition"], x["examples"]), axis=1
     )
@@ -105,14 +97,14 @@ def generate_text(seed_data, pipeline, tokenizer, batch_size):
             top_k=10,
             num_return_sequences=1,
             eos_token_id=tokenizer.eos_token_id,
-            max_length=400
+            max_length=500,
         )
         results.extend(batch_results)
 
     seed_data["generated_text"] = [r[0]["generated_text"] for r in results]
-    seed_data["generated_examples"] = seed_data[
-        "generated_text"
-    ].apply(extract_examples)
+    seed_data["generated_examples"] = seed_data["generated_text"].apply(
+        extract_examples
+    )
 
 
 def load_seed_dataset(csv_path):
@@ -121,12 +113,8 @@ def load_seed_dataset(csv_path):
     """
     logging.info(f"Saving DataFrame to {csv_path}")
     seed_data = pd.read_csv(csv_path)
-    seed_data["examples"] = seed_data[
-        "examples"
-    ].apply(json.loads)
-    seed_data["generated_examples"] = seed_data[
-        "generated_examples"
-    ].apply(json.loads)
+    seed_data["examples"] = seed_data["examples"].apply(json.loads)
+    seed_data["generated_examples"] = seed_data["generated_examples"].apply(json.loads)
     return seed_data
 
 
@@ -136,9 +124,7 @@ def save_seed_dataset(seed_data, csv_path):
     """
     logging.info(f"Saving DataFrame to {csv_path}")
     seed_data_to_save = seed_data.copy()
-    seed_data_to_save["examples"] = seed_data_to_save[
-        "examples"
-    ].apply(json.dumps)
+    seed_data_to_save["examples"] = seed_data_to_save["examples"].apply(json.dumps)
     seed_data_to_save["generated_examples"] = seed_data_to_save[
         "generated_examples"
     ].apply(json.dumps)

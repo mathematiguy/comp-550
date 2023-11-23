@@ -41,27 +41,27 @@ stages:
     deps:
     - path: code/build_seed_set.py
       hash: md5
-      md5: eeeb4b440f64ef38b6223c2c5cb099fa
-      size: 5148
+      md5: 9f98c9ef7da6b7183ba829ddb1d1cf23
+      size: 5050
     outs:
     - path: data/seed_set_data.csv
       hash: md5
-      md5: 0fa4f2bd387cf19bb1c543c06fb7a3ad
-      size: 194903
+      md5: 42bb43ad9abba3c03e315a9730fdb1f8
+      size: 268308
   train_logistic_model:
     cmd: python code/train_logistic_model.py --data_path data/seed_set_data.csv --model_path
       data/logistic.joblib
     deps:
     - path: code/train_logistic_model.py
       hash: md5
-      md5: 3765b8685666122286bd2820ae7a0930
-      size: 4753
+      md5: 17c603bbb52bcb4604a8129f9bb749c4
+      size: 5291
     - path: data/seed_set_data.csv
       hash: md5
-      md5: 0fa4f2bd387cf19bb1c543c06fb7a3ad
-      size: 194903
+      md5: 46a140731b08c5f145a7caf236a24d78
+      size: 200057
     outs:
-    - path: data/logistic.joblib
+    - path: data/seed_examples.csv
       hash: md5
-      md5: e94eb99bbd95cf0c66cab303ce63ad9f
-      size: 1147540
+      md5: 5288ced8387dfbfc90ff50422c466844
+      size: 43348
