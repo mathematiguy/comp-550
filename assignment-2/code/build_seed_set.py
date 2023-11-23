@@ -49,7 +49,7 @@ def generate_prompt(word, definition, examples):
     )
     if examples:
         prompt += "Examples:\n- " + "\n- ".join(examples) + "\n"
-    prompt += "Please generate 10 more example sentences.\n"
+    prompt += f"\nPlease generate 10 more example sentences of the word {word} following the definition and examples above:\n"
     return prompt
 
 
@@ -134,7 +134,7 @@ def save_seed_dataset(seed_data, csv_path):
 @click.command()
 @click.option(
     "--model_path",
-    default="/network/weights/llama.var/llama2/Llama-2-7b-chat-hf",
+    default="/network/weights/llama.var/llama2/Llama-2-13b-chat-hf",
     help="Model path for the text generation.",
 )
 @click.option("--batch_size", default=14, help="Batch size for text generation.")
