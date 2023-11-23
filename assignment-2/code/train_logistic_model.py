@@ -1,3 +1,4 @@
+
 """
 This script trains a logistic regression model for Word Sense Disambiguation.
 """
@@ -100,7 +101,7 @@ class ModelFactory:
 @click.command()
 @click.option('--data_path', default='data/seed_set_data.csv', help='Path to the seed dataset.')
 @click.option('--model_path', default='data/logistic.joblib', help='Path to the save the fitted model.')
-def main(data_path):
+def main(data_path, model_path):
     """
     Main function to run the script.
     """
@@ -119,7 +120,7 @@ def main(data_path):
     
     # Save the model
     model_filename = 'trained_model.joblib'
-    factory.save_model(clf, model_filename)
+    factory.save_model(clf, model_path)
 
     # Measure model accuracy
     train_accuracy, test_accuracy = factory.evaluate(clf, vectorizer, X_train_counts, X_test, y_train, y_test)

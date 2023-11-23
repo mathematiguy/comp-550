@@ -183,7 +183,7 @@ def cli(model_path, batch_size, csv_path):
     generate_text(seed_data, text_generation_pipeline, tokenizer, batch_size)
 
     # Save the DataFrame
-    save_dataframe(seed_data, csv_path)
+    save_seed_dataset(seed_data, csv_path)
 
 
 if __name__ == "__main__":
