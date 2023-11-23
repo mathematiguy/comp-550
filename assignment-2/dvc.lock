@@ -41,7 +41,7 @@ stages:
     deps:
     - path: code/build_seed_set.py
       hash: md5
-      md5: 9f98c9ef7da6b7183ba829ddb1d1cf23
+      md5: 924cd0a1bd4906634ad706c2871e2e11
       size: 5050
     outs:
     - path: data/seed_set_data.csv

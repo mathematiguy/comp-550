@@ -93,16 +93,18 @@ class ModelFactory:
         """
         Train the logistic regression model.
         """
+        X_train, X_test, y_train, y_test = train_test_split(
+            self.texts, self.labels, test_size=self.test_size
+        )
         vectorizer = CountVectorizer(tokenizer=self.lemmatize_tokenize)
-        X_train = vectorizer.fit_transform(self.texts)
-        y_train = pd.get_dummies(self.labels) * 1
+        X_train_counts = vectorizer.fit_transform(X_train)
         clf = MultiOutputRegressor(
             LogisticRegression(C=self.C, class_weight=self.class_weight)
         )
-        clf.fit(X_train, y_train)
-        return clf, vectorizer, X_train, y_train
+        clf.fit(X_train_counts, y_train)
+        return clf, vectorizer, X_train_counts, X_test, y_train, y_test
 
-    def evaluate(self, clf, vectorizer, X_train_counts, y_train):
+    def evaluate(self, clf, vectorizer, X_train_counts, X_test, y_train, y_test):
         """
         Evaluate the logistic regression model.
         """
@@ -110,7 +112,12 @@ class ModelFactory:
         preds = np.argmax(train_predictions, axis=1)
         targets = np.argmax(y_train, axis=1)
         train_accuracy = np.mean(preds == targets)
-        return train_accuracy
+        X_test_counts = vectorizer.transform(X_test)
+        test_predictions = clf.predict(X_test_counts)
+        test_preds = np.argmax(test_predictions, axis=1)
+        test_targets = np.argmax(y_test, axis=1)
+        test_accuracy = np.mean(test_preds == test_targets)
+        return train_accuracy, test_accuracy
 
     def save_model(self, clf, filename):
         """
@@ -145,21 +152,21 @@ def main(data_path, example_path, model_path):
     lemmatizer = WordNetLemmatizer()
     factory = ModelFactory(
         texts=seed_examples.text,
-        labels=seed_examples["synset_id"],
+        labels=pd.get_dummies(seed_examples["synset_id"]) * 1,
         tokenizer=lemmatizer,
         stop_words=stop_words,
     )
-    clf, vectorizer, X_train, y_train = factory.train()
+    clf, vectorizer, X_train_counts, X_test, y_train, y_test = factory.train()
 
     # Save the model
     model_filename = "trained_model.joblib"
     factory.save_model(clf, model_path)
 
     # Measure model accuracy
-    train_accuracy = factory.evaluate(
-        clf, vectorizer, X_train, y_train
+    train_accuracy, test_accuracy = factory.evaluate(
+        clf, vectorizer, X_train_counts, X_test, y_train, y_test
     )
-    print(f"Train Accuracy: {train_accuracy}")
+    print(f"Train Accuracy: {train_accuracy}, Test Accuracy: {test_accuracy}")
 
 
 if __name__ == "__main__":

@@ -80,6 +80,30 @@ def build_dataframe(dev_key):
     return seed_data
 
 
+def generate_additional_text(seed_data, text_generation_pipeline, tokenizer, batch_size, min_examples=10):
+    """
+    Generate additional text for synset_ids with fewer than min_examples.
+    """
+    for synset_id, group in seed_data.groupby("synset_id"):
+        current_count = len(group)
+        while current_count < min_examples:
+            remaining = min_examples - current_count
+            prompts = [group.iloc[0]["prompt"]] * remaining
+            dataset = Dataset.from_dict({"prompt": prompts})
+            batch_results = []
+            for i in tqdm(range(0, len(dataset), batch_size)):
+                batch = dataset[i:i + batch_size]["prompt"]
+                batch_results.extend(text_generation_pipeline(
+                    batch, do_sample=True, top_k=10, num_return_sequences=1,
+                    eos_token_id=tokenizer.eos_token_id, max_length=500
+                ))
+            new_examples = [extract_examples(r[0]["generated_text"]) for r in batch_results]
+            new_rows = [{"synset_id": synset_id, "generated_examples": ex} for ex in new_examples]
+            seed_data = pd.concat([seed_data, pd.DataFrame(new_rows)])
+            current_count += len(new_rows)
+    return seed_data
+
+
 def generate_text(seed_data, pipeline, tokenizer, batch_size):
     """
     Generate text using the provided pipeline and batch size.
@@ -134,7 +158,7 @@ def save_seed_dataset(seed_data, csv_path):
 @click.command()
 @click.option(
     "--model_path",
-    default="/network/weights/llama.var/llama2/Llama-2-13b-chat-hf",
+    default="/network/weights/llama.var/llama2/Llama-2-7b-chat-hf",
     help="Model path for the text generation.",
 )
 @click.option("--batch_size", default=14, help="Batch size for text generation.")
@@ -167,6 +191,9 @@ def cli(model_path, batch_size, csv_path):
 
     # Run text generation
     generate_text(seed_data, text_generation_pipeline, tokenizer, batch_size)
+
+    # After initial text generation
+    seed_data = generate_additional_text(seed_data, text_generation_pipeline, tokenizer, batch_size)
 
     # Save the DataFrame
     save_seed_dataset(seed_data, csv_path)
