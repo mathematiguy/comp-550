@@ -1,7 +1,7 @@
 # This Makefile automates routine tasks for this Singularity-based project.
 REPO_NAME := $(shell basename `git rev-parse --show-toplevel` | tr '[:upper:]' '[:lower:]')
 IMAGE := $(REPO_NAME).sif
-MODEL ?= /network/weights/llama.var/llama2/Llama-2-7b-chat-hf
+MODEL ?= /network/weights/llama.var/llama2
 RUN ?= singularity exec --nv $(FLAGS) -B $(MODEL):$(MODEL) $(IMAGE)
 SINGULARITY_ARGS ?=
 FLAGS ?=

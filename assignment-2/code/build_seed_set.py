@@ -12,8 +12,6 @@ from datasets import Dataset
 
 logging.basicConfig(level=logging.INFO)
 
-# Define functions with docstrings and logging
-
 
 def synset_from_key(sense_key):
     """
@@ -80,27 +78,39 @@ def build_dataframe(dev_key):
     return seed_data
 
 
-def generate_additional_text(seed_data, text_generation_pipeline, tokenizer, batch_size, min_examples=10):
+def generate_additional_text(seed_data, text_generation_pipeline, tokenizer, batch_size, min_examples=5):
     """
-    Generate additional text for synset_ids with fewer than min_examples.
+    Generate additional text for all synset_ids with fewer than min_examples.
     """
-    for synset_id, group in seed_data.groupby("synset_id"):
-        current_count = len(group)
-        while current_count < min_examples:
-            remaining = min_examples - current_count
-            prompts = [group.iloc[0]["prompt"]] * remaining
-            dataset = Dataset.from_dict({"prompt": prompts})
-            batch_results = []
-            for i in tqdm(range(0, len(dataset), batch_size)):
-                batch = dataset[i:i + batch_size]["prompt"]
-                batch_results.extend(text_generation_pipeline(
-                    batch, do_sample=True, top_k=10, num_return_sequences=1,
-                    eos_token_id=tokenizer.eos_token_id, max_length=500
-                ))
-            new_examples = [extract_examples(r[0]["generated_text"]) for r in batch_results]
-            new_rows = [{"synset_id": synset_id, "generated_examples": ex} for ex in new_examples]
-            seed_data = pd.concat([seed_data, pd.DataFrame(new_rows)])
-            current_count += len(new_rows)
+    need_more_data = seed_data.groupby("synset_id").filter(lambda x: len(x) < min_examples)
+    while not need_more_data.empty:
+        all_prompts = []
+        synset_ids = []
+
+        for synset_id, group in need_more_data.groupby("synset_id"):
+            total_examples = len(group['generated_examples'].sum())
+            prompts = [group.iloc[0]["prompt"]]
+            all_prompts.extend(prompts)
+            synset_ids.extend([synset_id])
+
+        # Generate text for all prompts
+        dataset = Dataset.from_dict({"prompt": all_prompts})
+        batch_results = []
+        for i in tqdm(range(0, len(dataset), batch_size)):
+            batch = dataset[i:i + batch_size]["prompt"]
+            batch_results.extend(text_generation_pipeline(
+                batch, do_sample=True, top_k=10, num_return_sequences=1,
+                eos_token_id=tokenizer.eos_token_id, max_length=500
+            ))
+
+        # Process and append new examples
+        for synset_id, result in zip(synset_ids, batch_results):
+            new_examples = extract_examples(result[0]["generated_text"])
+            seed_data.loc[seed_data['synset_id'] == synset_id, 'generated_examples'] = \
+                seed_data.loc[seed_data['synset_id'] == synset_id, 'generated_examples'].apply(lambda x: x + new_examples)
+
+        need_more_data = seed_data.groupby("synset_id").filter(lambda x: len(x) < min_examples)
+
     return seed_data
 
 
@@ -129,6 +139,8 @@ def generate_text(seed_data, pipeline, tokenizer, batch_size):
     seed_data["generated_examples"] = seed_data["generated_text"].apply(
         extract_examples
     )
+
+    return seed_data
 
 
 def load_seed_dataset(csv_path):
@@ -190,7 +202,7 @@ def cli(model_path, batch_size, csv_path):
     seed_data = build_dataframe(dev_key)
 
     # Run text generation
-    generate_text(seed_data, text_generation_pipeline, tokenizer, batch_size)
+    seed_data = generate_text(seed_data, text_generation_pipeline, tokenizer, batch_size)
 
     # After initial text generation
     seed_data = generate_additional_text(seed_data, text_generation_pipeline, tokenizer, batch_size)
