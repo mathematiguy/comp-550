@@ -1,16 +1,26 @@
 import click
 import pandas as pd
+import logging
+
+import nltk
 from loader import load_instances, load_key
-from wsd import preprocess, wordnet_lesk
+from wsd import preprocess, wordnet_lesk, most_frequent_synset
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
 
 
 def get_instances():
+    """
+    Loads the SemEval dataset instances and keys from files.
+    """
+    logging.info("Loading instances and keys")
     data_f = "data/multilingual-all-words.en.xml"
     key_f = "data/wordnet.en.key"
     dev_instances, test_instances = load_instances(data_f)
     dev_key, test_key = load_key(key_f)
 
-    # IMPORTANT: keys contain fewer entries than the instances; need to remove them
+    # Filter instances by keys
     dev_instances = {k: v for (k, v) in dev_instances.items() if k in dev_key}
     test_instances = {k: v for (k, v) in test_instances.items() if k in test_key}
 
@@ -18,23 +28,25 @@ def get_instances():
 
 
 def get_lemma_sense_key_to_synset_number_correspondence():
+    """
+    Creates a mapping from lemma sense keys to synset numbers.
+    """
+    logging.info("Mapping lemma sense keys to synset numbers")
     wordnet_key_file = "data/wordnet.en.key"
     lsk_to_sn = {}
     with open(wordnet_key_file, "r") as f:
         for line in f.read().strip().split("\n"):
-            line = line.strip()
-            _, lsk, sn = line.split(" ", 2)
+            _, lsk, sn = line.strip().split(" ", 2)
             lsk_to_sn[lsk] = set(sn.split(" "))
     return lsk_to_sn
 
 
 def build_sem_eval_data(csv_path):
     """
-    Constructs a dataframe out of the SemEval 2013 dataset.
+    Constructs a dataframe from the SemEval 2013 dataset.
     """
-
+    logging.info("Building SemEval dataset")
     dev_instances, test_instances = get_instances()
-
     lsk_to_sn = get_lemma_sense_key_to_synset_number_correspondence()
 
     sem_eval_data = []
@@ -72,13 +84,55 @@ def build_sem_eval_data(csv_path):
                 )
             )
 
-    return pd.DataFrame(sem_eval_data)
+    df = pd.DataFrame(sem_eval_data)
+    df["most_frequent_synset"] = df.lemma.apply(most_frequent_synset)
+    df["nltk_pred_synset"] = df.apply(
+        lambda x: set(
+            lemma.key() for lemma in nltk.wsd.lesk(x.context, x.lemma).lemmas()
+        ),
+        axis=1,
+    )
+
+    df.to_csv(csv_path, index=False)
+    logging.info(f"Dataframe saved to {csv_path}")
+    return df
 
 
 def calculate_lesk_algorithm_accuracy(sem_eval_data):
+    """
+    Calculates and returns the Lesk Algorithm's accuracy on the test and dev sets.
+    """
     test_acc = 100 * sem_eval_data.loc[sem_eval_data.test_set == "test", "match"].mean()
     dev_acc = 100 * sem_eval_data.loc[sem_eval_data.test_set == "dev", "match"].mean()
-    return test_acc, dev_acc
+    return dev_acc, test_acc
+
+
+def calculate_most_frequent_synset_accuracy(sem_eval_data):
+    dev_acc = (
+        sem_eval_data.loc[sem_eval_data.test_set == "dev", :]
+        .apply(lambda x: len(x.most_frequent_synset & x.targets) > 0, axis=1)
+        .mean()
+    )
+    test_acc = (
+        sem_eval_data.loc[sem_eval_data.test_set == "test", :]
+        .apply(lambda x: len(x.most_frequent_synset & x.targets) > 0, axis=1)
+        .mean()
+    )
+    return dev_acc, test_acc
+
+
+def calculate_nltk_lesk_algorithm_accuracy(sem_eval_data):
+    dev_acc = (
+        sem_eval_data.loc[sem_eval_data.test_set == "dev", :]
+        .apply(lambda x: len(x.nltk_pred_synset & x.targets) > 0, axis=1)
+        .mean()
+    )
+    test_acc = (
+        sem_eval_data.loc[sem_eval_data.test_set == "test", :]
+        .apply(lambda x: len(x.nltk_pred_synset & x.targets) > 0, axis=1)
+        .mean()
+    )
+    return dev_acc, test_acc
 
 
 @click.command()
@@ -88,16 +142,22 @@ def calculate_lesk_algorithm_accuracy(sem_eval_data):
     help="Path to save sem_eval_data.csv",
 )
 def cli(csv_path):
+    """
+    CLI command to process SemEval data and calculate accuracy.
+    """
     sem_eval_data = build_sem_eval_data(csv_path)
+    dev_acc, test_acc = calculate_lesk_algorithm_accuracy(sem_eval_data)
+    mfs_dev_acc, mfs_test_acc = calculate_most_frequent_synset_accuracy(sem_eval_data)
+    nltk_dev_acc, nltk_test_acc = calculate_nltk_lesk_algorithm_accuracy(sem_eval_data)
 
-    test_acc, dev_acc = calculate_lesk_algorithm_accuracy(sem_eval_data)
-    click.echo(f"Lesk Algorithm's Test Accuracy: {test_acc:.1f}%")
-    click.echo(f"Lesk Algorithm's Dev Accuracy: {dev_acc:.1f}%")
+    click.echo(f"Lesk Algorithm's Test Accuracy:\t\t\t{test_acc:.1f}%")
+    click.echo(f"Lesk Algorithm's Dev Accuracy:\t\t\t{dev_acc:.1f}%")
 
-    # Save the DataFrame to a file
-    sem_eval_data.to_csv(csv_path, index=False)
+    click.echo(f"Most Frequent Synset Dev Accuracy:\t{100*mfs_dev_acc:.1f}%")
+    click.echo(f"Most Frequent Synset Test Accuracy:\t{100*mfs_test_acc:.1f}%")
 
-    click.echo(f"Data saved to {csv_path}")
+    click.echo(f"NLTK Lesk Dev Accuracy:\t\t\t\t\t\t\t{100*nltk_dev_acc:.1f}%")
+    click.echo(f"NLTK Lesk Test Accuracy:\t\t\t\t\t\t{100*nltk_test_acc:.1f}%")
 
 
 if __name__ == "__main__":

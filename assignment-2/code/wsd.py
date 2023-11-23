@@ -67,6 +67,13 @@ def wordnet_lesk(lemma, context):
     return best_sense
 
 
+def most_frequent_synset(lemma):
+    """
+    Given a lemma, this returns the most frequent sense for that lemma.
+    """
+    return set(lemma.key() for lemma in wn.synsets(lemma)[0].lemmas())
+
+
 def build_sem_eval_data():
     """
     Constructs a dataframe out of the SemEval 2013 dataset.
