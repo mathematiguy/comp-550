@@ -14,7 +14,7 @@ stages:
     outs:
     - path: report/article.pdf
       hash: md5
-      md5: 67fb74f94d85ca50b434d61f28ade9c3
+      md5: 6e1862ae0060d8e1581fe9b0ad0a742a
       size: 162838
   sem_eval_data:
     cmd: python3 code/build_sem_eval_data.py --csv_path data/sem_eval_data.csv
@@ -34,7 +34,7 @@ stages:
     outs:
     - path: data/sem_eval_data.csv
       hash: md5
-      md5: bb2edc93aad68e72e9ba0a175307465f
+      md5: 2a2a16b2a2b594bb67a316b68f6afe97
       size: 1185298
   seed_set_data:
     cmd: python3 code/build_seed_set.py --csv_path data/seed_set_data.csv
