@@ -1,0 +1,141 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Arsclassica Article
+% LaTeX Template
+% Version 1.1 (1/8/17)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Lorenzo Pantieri (http://www.lorenzopantieri.net) with extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+10pt, % Main document font size
+a4paper, % Paper type, use 'letterpaper' for US Letter paper
+oneside, % One page layout (no page indentation)
+%twoside, % Two page layout (page indentation for binding and different headers)
+headinclude,footinclude, % Extra spacing for the header and footer
+BCOR5mm, % Binding correction
+]{scrartcl}
+
+\input{structure.tex} % Include the structure.tex file which specified the document structure and layout
+
+\hyphenation{Fortran hy-phen-ation} % Specify custom hyphenation points in words with dashes where you would like hyphenation to occur, or alternatively, don't put any dashes in a word to stop hyphenation altogether
+
+%----------------------------------------------------------------------------------------
+%	TITLE AND AUTHOR(S)
+%----------------------------------------------------------------------------------------
+
+\title{\normalfont\spacedallcaps{Comp 550: Fall 2023\\Reading Assignment 2}} % The article title
+
+\subtitle{Critical Summary: The Winograd Schema Challenge} % Uncomment to display a subtitle
+
+\author{\spacedlowsmallcaps{Caleb Moses*}} % The article author(s) - author affiliations need to be specified in the AUTHOR AFFILIATIONS block
+
+\date{} % An optional date to appear under the author(s)
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	HEADERS
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\sectionmark}[1]{\markright{\spacedlowsmallcaps{#1}}} % The header for all pages (oneside) or for even pages (twoside)
+%\renewcommand{\subsectionmark}[1]{\markright{\thesubsection~#1}} % Uncomment when using the twoside option - this modifies the header on odd pages
+\lehead{\mbox{\llap{\small\thepage\kern1em\color{halfgray} \vline}\color{halfgray}\hspace{0.5em}\rightmark\hfil}} % The header style
+
+\pagestyle{scrheadings} % Enable the headers specified in this block
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS & LISTS OF FIGURES AND TABLES
+%----------------------------------------------------------------------------------------
+
+\maketitle % Print the title/author/date block
+
+\setcounter{tocdepth}{2} % Set the depth of the table of contents to show sections and subsections only
+
+%----------------------------------------------------------------------------------------
+%	AUTHOR AFFILIATIONS
+%----------------------------------------------------------------------------------------
+
+\let\thefootnote\relax\footnotetext{* \textit{PhD Student, School of Computer Science, McGill University, Montreal, Canada}}
+
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+% Reading Assignment 3 - Outline
+% COMP 550, Fall 2023
+% Due Date: Nov 24, 2023 9:00 pm
+
+% Introduction
+\section{Introduction}
+% Brief introduction to the paper and its relevance.
+
+% Main Content
+\section{Summary of the Paper}
+% A concise summary of the paper's main points and findings.
+
+\subsection{Key Contributions}
+% Discuss the primary contributions of the paper.
+
+\subsection{Methodology}
+% Briefly outline the methodology used in the study.
+
+% Critical Analysis
+\section{Critical Analysis}
+% Your analysis of the paper, including strengths, limitations, and points of confusion.
+
+\subsection{Strengths}
+% Discuss the strong points and successes of the paper.
+
+\subsection{Limitations}
+% Identify and explain the limitations or weaknesses found in the paper.
+
+\subsection{Points of Confusion}
+% Mention any aspects that were not clear or fully understood.
+
+% Comparative and Reflective Analysis
+\section{Comparative and Reflective Analysis}
+% Reflection on specific questions and comparison with related tasks.
+
+\subsection{Comparative Dimensions}
+% Compare the Winograd Schema Challenge with the Turing Test and Recognizing Textual Entailment.
+
+\subsection{Dataset and Task Motivation}
+% Reflect on the motivation behind the dataset and task, and its implications.
+
+\subsection{Impact of Large Language Models}
+% Discuss the implications of LLMs' success on WSC and the notion of machine intelligence.
+
+% Conclusion
+\section{Conclusion}
+% Wrap up the summary with final thoughts and overall impression of the paper.
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\refname}{\spacedlowsmallcaps{References}} % For modifying the bibliography heading
+
+\bibliographystyle{plainnat}
+
+\bibliography{sample.bib} % The file containing the bibliography
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
