@@ -36,13 +36,18 @@ BCOR5mm, % Binding correction
 %	TITLE AND AUTHOR(S)
 %----------------------------------------------------------------------------------------
 
-\title{\normalfont\spacedallcaps{Comp 550: Fall 2023\\Reading Assignment 2}} % The article title
+\title{\normalfont\spacedallcaps{Reading Assignment 3}} % The article title
 
-\subtitle{Critical Summary: The Winograd Schema Challenge} % Uncomment to display a subtitle
+% \subtitle{Critical Summary: The Winograd Schema Challenge} % Uncomment to display a subtitle
 
 \author{\spacedlowsmallcaps{Caleb Moses*}} % The article author(s) - author affiliations need to be specified in the AUTHOR AFFILIATIONS block
 
 \date{} % An optional date to appear under the author(s)
+
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\makeatletter
+\@addtoreset{subsection}{section}
+\makeatother
 
 %----------------------------------------------------------------------------------------
 
@@ -63,6 +68,7 @@ BCOR5mm, % Binding correction
 %----------------------------------------------------------------------------------------
 
 \maketitle % Print the title/author/date block
+\vspace{-20mm} % Adjust the value as needed
 
 \setcounter{tocdepth}{2} % Set the depth of the table of contents to show sections and subsections only
 
@@ -82,10 +88,11 @@ BCOR5mm, % Binding correction
 % COMP 550, Fall 2023
 % Due Date: Nov 24, 2023 9:00 pm
 
+
 % Introduction
-\section{Introduction}
-% Brief introduction to the paper and its relevance.
-In the paper "The Wingrad Schema Challenge" by \citet{levesque2012winograd}, the authors propose an alternative to the Turing Test which aims to provide a practical means of determining whether a machine-based system such as a natural language generation algorithm is capable of thinking in the ``full-bodied sense we usually reserve for people''.
+%% \section{Introduction}
+%% % Brief introduction to the paper and its relevance.
+%% In the paper "The Wingrad Schema Challenge" by \citet{levesque2012winograd}, the authors propose an alternative to the Turing Test which aims to provide a practical means of determining whether a machine-based system such as a natural language generation algorithm is capable of thinking in the ``full-bodied sense we usually reserve for people''.
 
 % Main Content
 \section{Paper Summary}
@@ -96,11 +103,11 @@ The paper outlines the required properties that a well-designed WS should have a
 
 \subsection{Task Comparison}
 % Compare the tasks of the turing test, recognizing textual entailment and the Winograd Schema challenge along any salient dimensions you seem important.
-To solve the problem of verifying machine intelligence, Turing proposed the ``Imitation Game'', where a human interrogator conducts a long, free-flowing and unrestricted conversation with a machine after which they decide if the machine is distinguishable from a human on the basis of that conversation.
+%% To solve the problem of verifying machine intelligence, Turing proposed the ``Imitation Game'', where a human interrogator conducts a long, free-flowing and unrestricted conversation with a machine after which they decide if the machine is distinguishable from a human on the basis of that conversation.
 
-RTE is an alternative test whereby a subject is presented with yes-no questions concerning whether an English sentence entails another. The sentences are carefully designed such that they cover a broad range, english-speaking humans can pass it easily, it can be administered without expert judges and lastly that the sentences are difficult enough that being able to pass the test is considered evidence of thinking.
+%% RTE is an alternative test whereby a subject is presented with yes-no questions concerning whether an English sentence entails another. The sentences are carefully designed such that they cover a broad range, english-speaking humans can pass it easily, it can be administered without expert judges and lastly that the sentences are difficult enough that being able to pass the test is considered evidence of thinking.
 
-WS is a variant of RTE where the questions are designed such that the machine has to determine the referent of a pronoun or possessive adjective between two possible alternatives. The sentences are designed to be minimal, such that the answer appears obvious to a human.
+%% WS is a variant of RTE where the questions are designed such that the machine has to determine the referent of a pronoun or possessive adjective between two possible alternatives. The sentences are designed to be minimal, such that the answer appears obvious to a human.
 
 Between the three problems, the Turing Test is considered undesirable in that it requires the machine to be deceptive towards the interrogator, while RTE and WS can be solved in earnest. RTE and WS also have the advantage that they can be conducted automatically, given a well constructed test dataset while the Turing Test is too open-ended for automated evaluation to be possible.
 
@@ -119,11 +126,6 @@ Because the WS task is motivated by how the systems might solve them, this has t
 The strong claim the paper makes is that with a very high probability, anything that can answer the WS Challenge correctly is thinking in the ``full-bodied sense we usually reserve for people''. I think this is a stretch, since human thought implies many capabilities not tested in the WS challenge. One example is planning and system-2 thinking required to solve complex tasks. In this regard, Large Language Models are more powerful than would have been imagined by \citet{levesque2012winograd} when the challenge was designed.
 
 The weaker claim of the paper is that with a very high probability, anything that answers correctly is engaging in behaviour that we would say shows thinking in people. I think this is more reasonable, because it is like saying that ``for a human to do this, they would have to think'' which is true.
-
-
-% Conclusion
-\section{Conclusion}
-% Wrap up the summary with final thoughts and overall impression of the paper.
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
