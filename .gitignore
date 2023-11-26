@@ -161,10 +161,10 @@ cython_debug/
 **/.#*
 **/*.sif
 **/.DS_Store
-/reading-assignment/report/article.pdf
-/reading-assignment/report/article.aux
-/reading-assignment/report/article.bbl
-/reading-assignment/report/article.blg
-/reading-assignment/report/article.fdb_latexmk
-/reading-assignment/report/article.fls
-/reading-assignment/report/article.out
+**/report/article.pdf
+**/report/article.aux
+**/report/article.bbl
+**/report/article.blg
+**/report/article.fdb_latexmk
+**/report/article.fls
+**/report/article.out
