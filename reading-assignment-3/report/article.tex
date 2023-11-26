@@ -85,42 +85,41 @@ BCOR5mm, % Binding correction
 % Introduction
 \section{Introduction}
 % Brief introduction to the paper and its relevance.
+In the paper "The Wingrad Schema Challenge" by \citet{levesque2012winograd}, the authors propose an alternative to the Turing Test which aims to provide a practical means of determining whether a machine-based system such as a natural language generation algorithm is capable of thinking in the ``full-bodied sense we usually reserve for people''.
 
 % Main Content
-\section{Summary of the Paper}
-% A concise summary of the paper's main points and findings.
+\section{Paper Summary}
+% Your summary should include a description of the paper’s contents, its strengths and limitations, and any points that you did not understand. Since this paper discusses techniques that are not covered in the lectures, I expect that there will be concepts that you do not understand! Do not worry, and document this in your write-up.
+The paper begins with a discussion of the Turing Test and its limitations. It then considered the general problem of recognizing textual entailment (RTE), based on the challenge by \citet{dagan2006pascal}, \citet{bobrow2007precision} and \citet{rus2008study}. It then outlines the Winograd Schema (WS) challenge, which it presents as an example of an RTE problem.
 
-\subsection{Key Contributions}
-% Discuss the primary contributions of the paper.
+The paper outlines the required properties that a well-designed WS should have and discusses challenges and pitfalls in constructing them. It also makes arguments to support the claim that the solving WS is a sufficient condition for verifying that a machine system is capable of some degree of ``thinking''.
 
-\subsection{Methodology}
-% Briefly outline the methodology used in the study.
+\subsection{Task Comparison}
+% Compare the tasks of the turing test, recognizing textual entailment and the Winograd Schema challenge along any salient dimensions you seem important.
+To solve the problem of verifying machine intelligence, Turing proposed the ``Imitation Game'', where a human interrogator conducts a long, free-flowing and unrestricted conversation with a machine after which they decide if the machine is distinguishable from a human on the basis of that conversation.
 
-% Critical Analysis
-\section{Critical Analysis}
-% Your analysis of the paper, including strengths, limitations, and points of confusion.
+RTE is an alternative test whereby a subject is presented with yes-no questions concerning whether an English sentence entails another. The sentences are carefully designed such that they cover a broad range, english-speaking humans can pass it easily, it can be administered without expert judges and lastly that the sentences are difficult enough that being able to pass the test is considered evidence of thinking.
 
-\subsection{Strengths}
-% Discuss the strong points and successes of the paper.
+WS is a variant of RTE where the questions are designed such that the machine has to determine the referent of a pronoun or possessive adjective between two possible alternatives. The sentences are designed to be minimal, such that the answer appears obvious to a human.
 
-\subsection{Limitations}
-% Identify and explain the limitations or weaknesses found in the paper.
+Between the three problems, the Turing Test is considered undesirable in that it requires the machine to be deceptive towards the interrogator, while RTE and WS can be solved in earnest. RTE and WS also have the advantage that they can be conducted automatically, given a well constructed test dataset while the Turing Test is too open-ended for automated evaluation to be possible.
 
-\subsection{Points of Confusion}
-% Mention any aspects that were not clear or fully understood.
+However, since RTE and WS require a degree of external knowledge in order to solve, the authors note cases where the answers might not be obvious enough or there could be disagreement between humans as to the answer depending on their background or other context.
 
-% Comparative and Reflective Analysis
-\section{Comparative and Reflective Analysis}
-% Reflection on specific questions and comparison with related tasks.
+\subsection{Dataset and motivation}
 
-\subsection{Comparative Dimensions}
-% Compare the Winograd Schema Challenge with the Turing Test and Recognizing Textual Entailment.
+% The proposed dataset and task here are substantially motivated by \textit{how} systems might solve it. For example, WSC tests should be Google-proof. Why is this important? What are the advantages and disadvantages of motivating a task this way as opposed to by a downstream use case (e.g. machine translation or summarization)?
 
-\subsection{Dataset and Task Motivation}
-% Reflect on the motivation behind the dataset and task, and its implications.
+Because the WS task is motivated by how the systems might solve them, this has the advantage that solving it would be considered technical progress since existing methods will struggle to solve WS by its construction so it is clear new knowledge is needed. However, it is not clear that a system that could solve the WS challenge would be able to do much else beyond perhaps RTE, word sense disambiguation, co-reference resolution or similar computational linguistics problems.
 
-\subsection{Impact of Large Language Models}
-% Discuss the implications of LLMs' success on WSC and the notion of machine intelligence.
+\subsection{Can machines that solve WS ``think''?}
+
+% Since the publication of the paper, it turns out that large language models trained on the Internet can solve WSC with high accuracy. Does this mean that LLMs can think “in the full-bodied sense we usually reserve for people”? Why or why not?
+
+The strong claim the paper makes is that with a very high probability, anything that can answer the WS Challenge correctly is thinking in the ``full-bodied sense we usually reserve for people''. I think this is a stretch, since human thought implies many capabilities not tested in the WS challenge. One example is planning and system-2 thinking required to solve complex tasks. In this regard, Large Language Models are more powerful than would have been imagined by \citet{levesque2012winograd} when the challenge was designed.
+
+The weaker claim of the paper is that with a very high probability, anything that answers correctly is engaging in behaviour that we would say shows thinking in people. I think this is more reasonable, because it is like saying that ``for a human to do this, they would have to think'' which is true.
+
 
 % Conclusion
 \section{Conclusion}
