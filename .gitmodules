@@ -1,3 +1,6 @@
 [submodule "assignment-1/submodules/llama"]
 	path = assignment-1/submodules/llama
 	url = git@github.com:facebookresearch/llama.git
+[submodule "group-project"]
+	path = group-project
+	url = git@github.com:mathematiguy/enron-nlp-analysis.git
